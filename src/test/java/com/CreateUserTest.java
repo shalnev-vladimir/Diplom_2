@@ -22,7 +22,7 @@ public class CreateUserTest {
     }
 
     @Test
-    @Description("Проверка регистрации пользователя с валидными данными.")
+    @Description("Проверка регистрации пользователя с валидными данными")
     public void userCanBeCreatedTest() {
 
         int expectedStatusCode = 200;
