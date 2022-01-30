@@ -24,7 +24,7 @@ public class UserLoginWithoutRequiredFieldNegativeTest {
     }
 
     @Parameterized.Parameters
-    public static Object[][] getTestData () {
+    public static Object[][] getTestData() {
         return new Object[][] {
                 {UserCredentials.getUserWithEmail(user), 401, errorMessage},
                 {UserCredentials.getUserWithPassword(user), 401, errorMessage},
@@ -55,7 +55,7 @@ public class UserLoginWithoutRequiredFieldNegativeTest {
         assertEquals ("Status code is incorrect", expectedStatus, ActualStatusCode);
         // Проверяем что сообщение об ошибке соответствует ожидаемому
         assertEquals ("Error message is incorrect", expectedErrorMessage, errorMessage);
-
     }
+
 }
 

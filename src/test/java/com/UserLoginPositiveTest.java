@@ -5,7 +5,6 @@ import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -15,18 +14,18 @@ public class UserLoginPositiveTest {
 
     private UserClient userClient;
     private User user;
+    String token;
 
-    //Создаем нового рандомного курьера
     @Before
     public void setUp() {
         userClient = new UserClient();
         user = User.getRandom();
     }
 
-//    @After
-//    public void tearDown() {
-//        userClient.delete(token);
-//    }
+    @After
+    public void tearDown() {
+        userClient.delete(token);
+    }
 
     @Test
     @Description("Проверка что существующий пользователь может авторизоваться")
@@ -46,7 +45,6 @@ public class UserLoginPositiveTest {
         String token = login.extract().path("accessToken");
 
         // Проверка что статус код соответсвует ожиданиям
-       // assertThat ("Status code is incorrect", actualStatusCode, equalTo(200));
         assertEquals("Expected status cod is " + expectedStatusCode + ". But actual is " + actualStatusCode,
                 expectedStatusCode, actualStatusCode);
         // Проверка что пользователь авторизовался
@@ -54,5 +52,6 @@ public class UserLoginPositiveTest {
         // Проверка что токен пользователя не пустой
         assertThat("User access token is null", token, notNullValue());
     }
+
 }
 

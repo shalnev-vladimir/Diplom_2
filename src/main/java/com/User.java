@@ -1,17 +1,15 @@
 package com;
 
 import org.apache.commons.lang3.RandomStringUtils;
-// import com.github.javafaker.Faker;
 
 public class User {
 
     public static final String EMAIL_POSTFIX = "@yandex.ru";
-   // public static Faker faker = new Faker();
     public String email;
     public String password;
     public String name;
 
-    public User () {
+    public User() {
     }
 
     public User (String email, String password, String name) {
@@ -31,15 +29,15 @@ public class User {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
 
     public String getName() {
         return name;
     }
 
-    public User setEmail(String email){
+    public User setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -53,21 +51,23 @@ public class User {
         return this;
     }
 
-    public static User getUserWithEmailOnly () {
+    public static User getUserWithEmailOnly() {
         return new User().setEmail(RandomStringUtils.randomAlphabetic(10));
     }
-    public static User getUserWithPasswordOnly () {
+
+    public static User getUserWithPasswordOnly() {
         return new User().setPassword(RandomStringUtils.randomAlphabetic(10));
     }
-    public static User getUserWithNameOnly () {
+
+    public static User getUserWithNameOnly() {
         return new User().setName(RandomStringUtils.randomAlphabetic(10));
     }
 
-    public static User getUserWithoutName () {
+    public static User getUserWithoutName() {
         return new User().setEmail(RandomStringUtils.randomAlphabetic(10))
                 .setPassword(RandomStringUtils.randomAlphabetic(10));
     }
-    public static User getUserWithoutPassword () {
+    public static User getUserWithoutPassword() {
         return new User().setEmail(RandomStringUtils.randomAlphabetic(10))
                 .setName(RandomStringUtils.randomAlphabetic(10));
     }
@@ -75,4 +75,5 @@ public class User {
         return new User().setPassword(RandomStringUtils.randomAlphabetic(10))
                 .setName(RandomStringUtils.randomAlphabetic(10));
     }
+
 }

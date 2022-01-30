@@ -2,7 +2,6 @@ package com;
 
 import io.qameta.allure.Description;
 import io.restassured.response.ValidatableResponse;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -16,14 +15,11 @@ public class CreateUserTest {
     private UserClient userClient;
     String bearerToken;
 
-    // Создание рандомного пользователя
     @Before
     public void setUp() {
         userClient = new UserClient();
         user = User.getRandom();
     }
-
-    // здесь надо будет еще удаление прользователя написать (tearDown)
 
     @Test
     @Description("Проверка регистрации пользователя с валидными данными")
@@ -33,15 +29,11 @@ public class CreateUserTest {
 
         // Создание пользователя
         ValidatableResponse response = userClient.create(user);
-        // Получение статус кода с тела создания пользователя
+        // Получение статус кода с тела создания пользователя и тела ответа
         int actualStatusCode = response.extract().statusCode();
-        // Получение тела ответа при создании пользователя
         boolean isUserCreated = response.extract().path("success");
         // Получение токена пользователя
         bearerToken = response.extract().path("accessToken");
-//        System.out.println(actualStatusCode);
-//        System.out.println(isUserCreated);
-//        System.out.println(bearerToken);
 
         // Проверка что статус код соответсвует ожиданиям
         assertThat ("Expected status code is " + expectedStatusCode + ". But actual is " + actualStatusCode,
@@ -53,7 +45,7 @@ public class CreateUserTest {
     }
 
     @Test
-    @Description("Проверка что нельзя зарегистрировать 2х одинаковых пользователей")
+    @Description("Проверка, что нельзя зарегистрировать 2х одинаковых пользователей")
     public void checkUserCanNotBeCreatedIfUserWithTheSameRegisterDataAlreadyExistsNegativeTest() {
 
         int expectedStatusCode = 403;
@@ -71,7 +63,6 @@ public class CreateUserTest {
         String actualErrorMessage = response.extract().path("message");
 
         // Проверка что статус код соответсвует ожидаемому
-       // assertThat("Status code is incorrect", statusCode, equalTo(403));
         assertEquals("Expected status code is " + expectedStatusCode + ". But actual is " + actualStatusCode,
                 expectedStatusCode, actualStatusCode);
         // Проверка что одинаковый пользователь не создался
@@ -80,5 +71,6 @@ public class CreateUserTest {
         assertEquals("Expected error massage is '" + expectedErrorMessage + "'. But actual is '" + actualErrorMessage + "'.",
                 expectedErrorMessage, actualErrorMessage);
     }
+
 }
 

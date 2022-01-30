@@ -50,17 +50,19 @@ public class UnsuccessfulCreatingUserWithInvalidDataNegativeTest {
         // Создание курьера
         ValidatableResponse response = new UserClient().create(user);
         // Получение статус кода запроса
-        int statusCode = response.extract().statusCode();
+        int actualStatusCode = response.extract().statusCode();
         // Получение тела ответа при создании клиента
         boolean isUserNotCreated = response.extract().path("success");
         // Получение значения ключа "Message"
-        String errorMessage = response.extract().path("message");
+        String actualErrorMessage = response.extract().path("message");
 
         // Проверка что статус код соответвует ожиданиям
-        assertEquals("Status code is incorrect", expectedStatus, statusCode);
+        assertEquals("Ожидаемый статус код " + expectedStatus + ". Фактический " + actualStatusCode,
+                expectedStatus, actualStatusCode);
         // Проверка что курьер создался
-        assertFalse ("User is created", isUserNotCreated);
+        assertFalse ("Пользователь создался. Но не должен был.", isUserNotCreated);
         // Проверка что сообщение об ошибке соответвует ожиданиям
-        assertEquals("Error message is incorrect", expectedErrorMessage, errorMessage);
+        assertEquals("Ожидаемое сообщение об ошибке " + expectedErrorMessage + ". Фактическое" + actualErrorMessage,
+                expectedErrorMessage, actualErrorMessage);
     }
 }

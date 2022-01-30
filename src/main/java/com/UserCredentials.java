@@ -1,13 +1,9 @@
 package com;
 
-import org.apache.commons.lang3.RandomStringUtils;
-
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
-// import com.github.javafaker.Faker;
 
 public class UserCredentials {
 
-   // public static Faker faker = new Faker();
     public String email;
     public String password;
     public String name;
@@ -68,5 +64,6 @@ public class UserCredentials {
     public static String getUserName() {
         return randomAlphabetic(10).toLowerCase();
     }
+
 }
 

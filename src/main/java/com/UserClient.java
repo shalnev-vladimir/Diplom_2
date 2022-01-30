@@ -28,42 +28,6 @@ public class UserClient extends RestAssuredClient {
                 .then();
     }
 
-    @Step ("Информация о пользователе")
-    public ValidatableResponse userInfo(String token) {
-        return given()
-                .spec(getBaseSpec())
-                .auth().oauth2(token)
-                .when()
-                .get(USER_PATH + "/user")
-                .then();
-    }
-
-    @Step
-    public ValidatableResponse getInfo(String token){
-
-        return
-                given()
-                        .header("Authorization", token)
-                        .spec(getBaseSpec())
-                        .when()
-                        .get(USER_PATH + "/user")
-                        .then();
-    }
-
-//    @Step
-//    public ValidatableResponse editInfo(Object object, String token){
-//
-//        return
-//                given()
-//                        .header("Authorization", token)
-//                        .spec(getBaseSpec())
-//                        .body(object)
-//                        .when()
-//                        .patch(USER_PATH + "/user")
-//                        .then();
-//
-//    }
-
     @Step
     public ValidatableResponse editInfo(Object object, String token){
 
@@ -100,11 +64,11 @@ public class UserClient extends RestAssuredClient {
                 .then();
     }
 
-    public ValidatableResponse delete(String token) {
-//        if (token == null) {
-//            return;
-//        }
-        return given()
+    public void delete(String token) {
+        if (token == null) {
+            return;
+        }
+         given()
                 .spec(getBaseSpec())
                 .auth().oauth2(token)
                 .when()
@@ -112,7 +76,6 @@ public class UserClient extends RestAssuredClient {
                 .then()
                 .statusCode(202);
     }
-
 
 }
 

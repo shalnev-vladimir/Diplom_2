@@ -1,18 +1,12 @@
 package com;
 
-import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
-import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
@@ -22,20 +16,20 @@ public class CreateOrderTest {
 
     private UserClient userClient;
     private User user;
-    private OrderClient orderClient;
     private String token;
-    IngredientsClient ingredientsClient;
-   // private final HashMap<String, List> orderHash = new HashMap<>();
 
     List<String> ingredients = new ArrayList<>();
     private int orderNumber;
 
-
-    //Создаем нового рандомного курьера
     @Before
     public void setUp() {
         userClient = new UserClient();
         user = User.getRandom();
+    }
+
+    @After
+    public void tearDown() {
+        userClient.delete(token);
     }
 
 
@@ -94,7 +88,7 @@ public class CreateOrderTest {
     }
 
     @Test
-    @DisplayName("CThis test verifies that it is not allowed to create an order with invalid id of ingredients")
+    @DisplayName("This test verifies that it is not allowed to create an order with invalid id of ingredients")
     public void checkUserCanNotCreateAnOrderWithInvalidIngredientsIdTest() {
         int expectedStatusCode = 500;
 
@@ -106,46 +100,6 @@ public class CreateOrderTest {
 
         assertEquals("Ожидаемый статус код " + expectedStatusCode + ". Фактический " + actualStatusCode,
                 expectedStatusCode, actualStatusCode);
-    }
-
-
-    // Не работает УДАЛИТЬ
-    @Test
-    @Description("Создаем заказ. Пользователь авторизован.")
-    public void createOrderPositiveTest() {
-
-//        // Создание пользователя
-//        userClient.create(user);
-//        // Авторизация созданного пользователя
-//        userClient.login(UserCredentials.from(user));
-//        // Создание заказа
-//        OrderClient orderClient = new OrderClient();
-//        ValidatableResponse response = orderClient.makeOrder(user);
-//
-//        int statusCode = response.extract().statusCode();
-//        boolean isOrderCreated = response.extract().path("success");
-//
-//        System.out.println(statusCode);
-//        System.out.println(isOrderCreated);
-//      Создание пользователя
-       // userClient.create(user);
-        // Авторизация созданного пользователя
-//        ValidatableResponse login = userClient.login(UserCredentials.from(user));
-//        String token = login.extract().path("accessToken");
-//        System.out.println(token);
-//        ValidatableResponse responseIngredients = ingredientsClient.getIngredients();
-       // List<String> ingredients = responseIngredients.path("data._id");
-       // ValidatableResponse response = orderClient.createOrderWithToken(ingredients, "");
-        // Создание заказа
-        // OrderClient orderClient = new OrderClient();
-//        ValidatableResponse responseOrderWithToken = orderClient.createOrderWithToken(token, orderHash);
-//        ArrayList<String> actualIngredientsList = responseOrderWithToken.extract().path("order.ingredients._id");
-
-//        assertThat(responseOrderWithToken.extract().statusCode(), equalTo(200));
-//        assertTrue(responseOrderWithToken.extract().path("success"));
-//        assertNotNull(responseOrderWithToken.extract().path("order.number"));
-//        assertEquals("Кол-во ингредиентов разное", numberOfIngredients, actualIngredientsList.size());
-
     }
 
 }
